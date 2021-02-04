@@ -5,10 +5,7 @@ import requests
 import pymysql
 import time
 import json
-import pandas
 import csv
-
-
 
 class Liuxue():
 
@@ -159,7 +156,8 @@ class Liuxue():
             print("写入数据库完成")
         print("字典键值对取值完成")
 
-# 踩过的坑
+
+    # 踩过的坑
 # for value in key:
 # #     # print(value,key[value])
 # #     kv = {}
