@@ -149,7 +149,8 @@ class Liuxue():
             # finally:
             print("字典键值对取值完成")
             # 数据库
-            insert_sql = 'insert into school (univ_id,univ_sort,univ_name,univ_ename,city,univ_logo,url) values ("{}","{}","{}","{}","{}","{}","{}")'\
+            insert_sql = 'insert into school (univ_id,univ_sort,univ_name,univ_ename,city,univ_logo,url) values ' \
+                                        '("{}","{}","{}","{}","{}","{}","{}")'\
                                         .format(id,sort,univ_name,univ_ename,city,univ_logo,url)
             # print(insert_sql)
             self.write_db(insert_sql)
@@ -191,6 +192,35 @@ class Liuxue():
 #         continue
 #         pass  #  #
 
+    def school_major(self):
+        data = {}
+        re2 = requests.post(url='https://api.compassedu.hk/index.php/api/collegeapp/getallmajor',data= data)
+        print(re2.text)
+
+
+
+    """
+    URL https://api.compassedu.hk/index.php/api/collegeapp/getallmajor
+    last sign
+    1612421789117 timestamp
+    9 schoolid
+    
+    URL https://api.compassedu.hk/index.php/api/collegeapp/getmajorinfo
+    last sign
+    1612422018129 timestamp
+    50001 majorid
+    申请须知 费用
+    申请要求
+    课程设置
+    """
+
+
+
+
+
+
+
+
 
 
 
@@ -207,7 +237,8 @@ class Liuxue():
 
 if __name__ == '__main__':
     liu = Liuxue()
-    liu.acode()
+    # liu.acode()
     # liu.school_list()
+    liu.school_major()
 
 
