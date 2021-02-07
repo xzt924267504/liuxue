@@ -70,10 +70,7 @@ class Liuxue():
         with open('./acode.json', encoding='utf8') as f:
             acode = json.loads(f.read())
 
-        # 第一行写入country_code,country_name\n
-        # with open('.\\{}'.format(self.csv_id), 'a', encoding='utf8') as f:
-        #     f.write("country_code,country_name\n")
-        #     f.close()
+
         for j in az:
             cons = acode['data'][j]
             for i in cons:
@@ -194,10 +191,13 @@ class Liuxue():
 
     def school_major(self):
         data = {}
-        re2 = requests.post(url='https://api.compassedu.hk/index.php/api/collegeapp/getallmajor',data= data)
-        print(re2.text)
-
-
+        # re2 = requests.post(url='https://api.compassedu.hk/index.php/api/collegeapp/getallmajor',data= data)
+        re3 = requests.get(url='http://www.compassedu.hk/class_42')
+        re3.encoding = ("utf-8")
+        strall = re3.text
+        print(strall)
+        # reall = re.findall(pattern=strall,string=r'<a href="//www.compassedu.hk/(.*?)</a></li>')
+        # print(reall)
 
     """
     URL https://api.compassedu.hk/index.php/api/collegeapp/getallmajor
@@ -213,6 +213,9 @@ class Liuxue():
     申请要求
     课程设置
     """
+
+
+
 
 
 
