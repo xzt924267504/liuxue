@@ -155,7 +155,6 @@ class Liuxue():
             print("写入数据库完成")
         print("字典键值对取值完成")
 
-
 # 踩过的坑
 
 # for value in key:
@@ -193,15 +192,13 @@ class Liuxue():
 
     def school_major(self):
         univ_id = liu.select_db("select univ_id from school order by univ_id")
-
+        # list(map(lambda li: li[0],univ_id))   # 跟下面循环元祖结果相同
         li = []
         for i in univ_id:
             li.append(i[0])
-        #
-        # for i in range(len(univ_id)):
-        #     print(univ_id[i][0])
-        #     li.append(univ_id[i][0])
-        print(li)
+
+        for j in li:
+            pass
 
         data = {
                 "sign":"last",
@@ -218,9 +215,25 @@ class Liuxue():
         major_school = major_data.get("school")
         major_list = major_data.get("list")
 
+        # 循环所有专业添加数据库
         for school in major_school:
             pass
-            print(school)
+            # print(school)
+            try:
+                id = school["id"]
+                name = school["name"]
+            except Exception as e:
+                print("循环major列表报错,信息:",e)
+                continue
+            insert_sql = 'insert into major (id,name) values ({},"{}")'.format(id,name)
+            try:
+                self.write_db(insert_sql)
+            except Exception as e:
+                print("major school循环写入数据库报错,信息为:",e)
+
+        print("school_major写入数据库完成")
+
+
         for list in major_list:
             pass
             print(list)
@@ -264,20 +277,14 @@ class Liuxue():
 
     def demo(self):
         univ_id = liu.select_db("select univ_id from school order by univ_id")
-        print('----------------------------------------------------------------')
 
-        # li = []
-        # for i in range(len(univ_id)):
-        #     # print(univ_id[i][0])
-        #     # li.append(univ_id[i][0])
-        # print(li)
+
 if __name__ == '__main__':
 
     liu = Liuxue()
     # liu.acode()             # 所有国家
     # liu.school_list()       # 所有学校
     liu.school_major()      # 学校所有专业(系院)和list
-
     # liu.demo()
 
 
