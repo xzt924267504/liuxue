@@ -190,14 +190,28 @@ class Liuxue():
 #         pass  #  #
 
     def school_major(self):
-        data = {}
-        # re2 = requests.post(url='https://api.compassedu.hk/index.php/api/collegeapp/getallmajor',data= data)
-        re3 = requests.get(url='http://www.compassedu.hk/class_42')
-        re3.encoding = ("utf-8")
-        strall = re3.text
-        print(strall)
-        # reall = re.findall(pattern=strall,string=r'<a href="//www.compassedu.hk/(.*?)</a></li>')
-        # print(reall)
+
+        data = {
+                "sign":"last",
+                "timestamp":"1612754776871",
+                "schoolid":"9"
+                }
+        major = requests.post(url='https://api.compassedu.hk/index.php/api/collegeapp/getallmajor',data= data)
+        major.encoding = ("utf-8")
+        print(major.text)
+        print("----------------------------------------------------------------------------------------")
+
+        major_json = major.json()
+        major_data = major_json.get("data")
+        major_school = major_data.get("school")
+        major_list = major_data.get("list")
+
+        for school in major_school:
+            pass
+            # print(school)
+        for list in major_list:
+            pass
+            print(list)
 
     """
     URL https://api.compassedu.hk/index.php/api/collegeapp/getallmajor
@@ -221,7 +235,15 @@ class Liuxue():
 
 
 
-
+    def select_db(self,sql,database='liuxue',host = '127.0.0.1',user = 'root',password = '123456',):
+        con = pymysql.connect(host = host,user = user,password = password,database = database,port = 3307)
+        cur = con.cursor()
+        cur.execute(sql)
+        curf = cur.fetchall()
+        # print(curf)
+        con.commit()
+        con.close()
+        cur.close()
 
 
 
