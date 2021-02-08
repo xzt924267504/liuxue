@@ -102,6 +102,7 @@ class Liuxue():
 
 
     def school_list(self):
+
         data = {
             "accept": "text/html, application/xhtml+xml, image/jxr, */*",
             "User-Agent":random.choice(self.user_agent),
@@ -155,7 +156,7 @@ class Liuxue():
         print("字典键值对取值完成")
 
 
-    # 踩过的坑
+     #踩过的坑
 # for value in key:
 # #     # print(value,key[value])
 # #     kv = {}
@@ -187,9 +188,17 @@ class Liuxue():
 #         pass
 #     else:
 #         continue
-#         pass  #  #
+#         pass  #  #   #
 
     def school_major(self):
+        univ_id = liu.select_db("select univ_id from school order by univ_id")
+
+        li = []
+
+        for i in range(len(univ_id)):
+            print(univ_id[i][0])
+            li.append(univ_id[i][0])
+        print(li)
 
         data = {
                 "sign":"last",
@@ -198,7 +207,7 @@ class Liuxue():
                 }
         major = requests.post(url='https://api.compassedu.hk/index.php/api/collegeapp/getallmajor',data= data)
         major.encoding = ("utf-8")
-        print(major.text)
+        # print(major.text)
         print("----------------------------------------------------------------------------------------")
 
         major_json = major.json()
@@ -208,7 +217,7 @@ class Liuxue():
 
         for school in major_school:
             pass
-            # print(school)
+            print(school)
         for list in major_list:
             pass
             print(list)
@@ -228,13 +237,7 @@ class Liuxue():
     课程设置
     """
 
-
-
-
-
-
-
-
+    # 数据库查询
     def select_db(self,sql,database='liuxue',host = '127.0.0.1',user = 'root',password = '123456',):
         con = pymysql.connect(host = host,user = user,password = password,database = database,port = 3307)
         cur = con.cursor()
@@ -244,11 +247,9 @@ class Liuxue():
         con.commit()
         con.close()
         cur.close()
+        return curf
 
-
-
-
-
+    # 数据库写入
     def write_db(self,sql,database='liuxue',host = '127.0.0.1',user = 'root',password = '123456',):
         con = pymysql.connect(host = host,user = user,password = password,database = database,port = 3307)
         cur = con.cursor()
@@ -258,12 +259,22 @@ class Liuxue():
         cur.close()
 
 
+    def demo(self):
+        univ_id = liu.select_db("select univ_id from school order by univ_id")
+        print('----------------------------------------------------------------')
 
-
+        # li = []
+        # for i in range(len(univ_id)):
+        #     # print(univ_id[i][0])
+        #     # li.append(univ_id[i][0])
+        # print(li)
 if __name__ == '__main__':
+
     liu = Liuxue()
-    # liu.acode()
-    # liu.school_list()
-    liu.school_major()
+    # liu.acode()             # 所有国家
+    # liu.school_list()       # 所有学校
+    liu.school_major()      # 学校所有专业(系院)和list
+
+    # liu.demo()
 
 
