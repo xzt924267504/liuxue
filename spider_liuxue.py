@@ -228,9 +228,8 @@ class Liuxue():
             insert_sql = 'insert into major (id,name) values ({},"{}")'.format(id,name)
             try:
                 self.write_db(insert_sql)
-            except Exception as e:
-                print("major school循环写入数据库报错,信息为:",e)
-
+            except BaseException as be:
+                print("major school循环写入数据库报错,信息为:",be)
         print("school_major写入数据库完成")
 
 
@@ -238,12 +237,9 @@ class Liuxue():
             pass
             print(list)
 
+
+
     """
-    URL https://api.compassedu.hk/index.php/api/collegeapp/getallmajor
-    last sign
-    1612421789117 timestamp
-    9 schoolid
-    
     URL https://api.compassedu.hk/index.php/api/collegeapp/getmajorinfo
     last sign
     1612422018129 timestamp
