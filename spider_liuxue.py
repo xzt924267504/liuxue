@@ -156,7 +156,8 @@ class Liuxue():
         print("字典键值对取值完成")
 
 
-     #踩过的坑
+# 踩过的坑
+
 # for value in key:
 # #     # print(value,key[value])
 # #     kv = {}
@@ -194,10 +195,12 @@ class Liuxue():
         univ_id = liu.select_db("select univ_id from school order by univ_id")
 
         li = []
-
-        for i in range(len(univ_id)):
-            print(univ_id[i][0])
-            li.append(univ_id[i][0])
+        for i in univ_id:
+            li.append(i[0])
+        #
+        # for i in range(len(univ_id)):
+        #     print(univ_id[i][0])
+        #     li.append(univ_id[i][0])
         print(li)
 
         data = {
