@@ -191,23 +191,26 @@ class Liuxue():
 #         pass  #  #   #
 
     def school_major(self):
-        univ_id = liu.select_db("select univ_id from school order by univ_id")
-        # list(map(lambda li: li[0],univ_id))   # 跟下面循环元祖结果相同
-        li = []
-        for i in univ_id:
-            li.append(i[0])
 
-        for j in li:
-            pass
+        univ_id = liu.select_db("select univ_id from school order by univ_id")
+        """
+        list(map(lambda li: li[0],univ_id))   # 跟下面循环元祖结果相同
+        """
+        # li = []
+        # for i in univ_id:
+        #     li.append(i[0])
+        #
+        # for j in li:
+        #     pass
 
         data = {
                 "sign":"last",
                 "timestamp":"1612754776871",
-                "schoolid":"9"
+                "schoolid":"8"
                 }
         major = requests.post(url='https://api.compassedu.hk/index.php/api/collegeapp/getallmajor',data= data)
         major.encoding = ("utf-8")
-        # print(major.text)
+        print(major.text)
         print("----------------------------------------------------------------------------------------")
 
         major_json = major.json()
@@ -219,23 +222,41 @@ class Liuxue():
         for school in major_school:
             pass
             # print(school)
-            try:
-                id = school["id"]
-                name = school["name"]
-            except Exception as e:
-                print("循环major列表报错,信息:",e)
-                continue
+            # try:
+            id = school["id"]
+            name = school["name"]
+        #     except Exception as e:
+        #         print("循环major列表报错,信息:",e)
+        #         continue
             insert_sql = 'insert into major (id,name) values ({},"{}")'.format(id,name)
             try:
                 self.write_db(insert_sql)
             except BaseException as be:
                 print("major school循环写入数据库报错,信息为:",be)
-        print("school_major写入数据库完成")
+        print("school_major写入数据库完成schoolid为:('{}')".format(""))
+        print("----------------------------------------------------------------------------------------")
 
 
         for list in major_list:
-            pass
-            print(list)
+
+            # print(list)
+            id = list["id"]
+            major_detail_id = list["major_detail_id"]
+            sort = list["sort"]
+            school_id = list["school_id"]
+            major_cname = list["major_cname"]
+            major_ename = list["major_ename"]
+            major_detail_name = list["major_detail_name"]
+            insert_sql2 = 'insert into major (id,major_detail_id,sort,school_id,major_cname,major_ename,major_detail_name) values ' \
+                          '({},{},{},{},"{}","{}","{}")'\
+                          .format(id,major_detail_id,sort,school_id,major_cname,major_ename,major_detail_name)
+
+            try:
+                self.write_db(insert_sql2)
+                # print(insert_sql2)
+            except BaseException as ba2:
+                print("major school_list循环写入数据库报错,信息为:",ba2)
+        print("major_list_list写入数据库完成 schoolid为:('{}')".format(""))
 
 
 
