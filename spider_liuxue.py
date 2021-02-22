@@ -7,6 +7,14 @@ import time
 import json
 import csv
 
+
+"""
+https://www.postgraduatesearch.com/pgs/search/?course=artificial-intelligence-ai&qualification=phd
+https://www.mastermate.cn/university
+https://www.lxbird.com
+http://testc.compassedu.hk/      h5页面
+"""
+
 class Liuxue():
 
     def __init__(self):
@@ -206,7 +214,7 @@ class Liuxue():
         data = {
                 "sign":"last",
                 "timestamp":"1612754776871",
-                "schoolid":"8"
+                "schoolid":"9"
                 }
         major = requests.post(url='https://api.compassedu.hk/index.php/api/collegeapp/getallmajor',data= data)
         major.encoding = ("utf-8")
@@ -228,17 +236,17 @@ class Liuxue():
         #     except Exception as e:
         #         print("循环major列表报错,信息:",e)
         #         continue
-            insert_sql = 'insert into major (id,name) values ({},"{}")'.format(id,name)
+            insert_sql = 'insert into major_school (id,name) values ({},"{}")'.format(id,name)
             try:
                 self.write_db(insert_sql)
             except BaseException as be:
                 print("major school循环写入数据库报错,信息为:",be)
-        print("school_major写入数据库完成schoolid为:('{}')".format(""))
+                print(insert_sql)
+        print("school_major写入数据库完成schoolid为:('{}')".format("QAQ"))
         print("----------------------------------------------------------------------------------------")
 
 
         for list in major_list:
-
             # print(list)
             id = list["id"]
             major_detail_id = list["major_detail_id"]
@@ -250,25 +258,37 @@ class Liuxue():
             insert_sql2 = 'insert into major (id,major_detail_id,sort,school_id,major_cname,major_ename,major_detail_name) values ' \
                           '({},{},{},{},"{}","{}","{}")'\
                           .format(id,major_detail_id,sort,school_id,major_cname,major_ename,major_detail_name)
-
             try:
                 self.write_db(insert_sql2)
                 # print(insert_sql2)
             except BaseException as ba2:
                 print("major school_list循环写入数据库报错,信息为:",ba2)
-        print("major_list_list写入数据库完成 schoolid为:('{}')".format(""))
+                print(insert_sql2)
+        print("major_list_list写入数据库完成 schoolid为:('{}')".format("QAQ"))
 
 
 
-    """
-    URL https://api.compassedu.hk/index.php/api/collegeapp/getmajorinfo
-    last sign
-    1612422018129 timestamp
-    50001 majorid
-    申请须知 费用
-    申请要求
-    课程设置
-    """
+    def major_info(self):
+
+        """
+        URL https://api.compassedu.hk/index.php/api/collegeapp/getmajorinfo
+        last sign
+        1612422018129 timestamp
+        50001 majorid
+        申请须知 费用
+        申请要求
+        课程设置
+        """
+        data = {
+                "sign":"last",
+                "timestamp":"1612422018129",
+                "majorid":"62738"
+                }
+        info = requests.post(url='https://api.compassedu.hk/index.php/api/collegeapp/getmajorinfo',data= data)
+        info.encoding = ("utf-8")
+        print(info.text)
+
+
 
     # 数据库查询
     def select_db(self,sql,database='liuxue',host = '127.0.0.1',user = 'root',password = '123456',):
@@ -302,6 +322,6 @@ if __name__ == '__main__':
     # liu.acode()             # 所有国家
     # liu.school_list()       # 所有学校
     liu.school_major()      # 学校所有专业(系院)和list
-    # liu.demo()
+    # liu.major_info()
 
 
